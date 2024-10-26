@@ -7,15 +7,14 @@ import TodoForm from "./TodoForm/TodoForm";
 import TodoList from "./TodoList/TodoList";
 import TodoFilter from "./TodoFilter/TodoFilter.jsx";
 import { fetchTodos } from "../../services/todosService.jsx";
+import { useSearchParams } from "react-router-dom";
 
 export default function TodoApp() {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(false);
     const [todosList, setTodosList] = useState([]);
     const [refreshTodos, setRefreshTodos] = useState(true);
-    const [filters, setFilters] = useState({
-        q: "",
-    });
+
 
     const getTodos = async () => {
         if (!loading) {
@@ -36,11 +35,7 @@ export default function TodoApp() {
         }
     }
     function handleFilterChange(newFilters) {
-        console.log("New Filters: ", newFilters);
-        setFilters({
-            ...filters,
-            q: newFilters.searchTerm,
-        });
+
     }
     useEffect(() => {
         if (token) {
@@ -59,7 +54,11 @@ export default function TodoApp() {
                     setRefreshTodos={setRefreshTodos}
                     refreshTodos={refreshTodos}
                 />
-                <TodoFilter handleFilterChange={handleFilterChange} />
+                <TodoFilter
+                    handleFilterChange={handleFilterChange}
+                    setGlobalLoading={setLoading}
+                    setTodosList={setTodosList}
+                />
 
                 <TodoList
                     setGlobalLoading={setLoading}

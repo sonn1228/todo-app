@@ -1,52 +1,53 @@
 import PropTypes from 'prop-types';
 import './TodoFilter.css';
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { fetchTodosFilter } from '../../../services/todosService';
 
 export default function TodoFilter({
-    handleFilterChange
+    handleFilterChange,
+    setGlobalLoading,
+    setTodosList
 }) {
-    const [searchTerm, setSearchTerm] = useState("");
-    const typingTimeoutRef = useRef(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const title = searchParams.get('title');
+    const [isLoading, setIsLoading] = useState(false);
 
-
-    const handleSearchTermChange = (e) => {
-        const value = e.target.value;
-        console.log("Value: ", value);
-        setSearchTerm(value);
-        if (typingTimeoutRef.current) {
-            clearTimeout(typingTimeoutRef.current);
+    const fetchTodos = async () => {
+        setGlobalLoading(true);
+        try {
+            const response = await fetchTodosFilter(title);
+            setTodosList(response.data.todoList);
+        } catch (error) {
+            console.error('Lỗi khi call API:', error);
+        } finally {
+            setGlobalLoading(false);
         }
+    };
 
-    }
-    // const handleSearchTermChange = (e) => {
-    //     const value = e.target.value;
-    //     setSearchTerm(value);
+    const handleSearch = (event) => {
+        const newTitle = event.target.value;
+        if (newTitle) {
+            setSearchParams({ title: newTitle });
+        } else {
+            searchParams.delete('title');
+            setSearchParams(searchParams);
+        }
+        fetchTodos();
+    };
 
-    //     if (!onSubmit) return;
-
-    //     if (typingTimeoutRef.current) {
-    //         clearTimeout(typingTimeoutRef.current);
-    //     }
-
-    //     typingTimeoutRef.current = setTimeout(() => {
-    //         const formValues = {
-    //             searchTerm: value,
-    //         };
-
-    //         onSubmit(formValues);
-    //     }, 500);
-    // }
     return (
-        <form className="form-filter" >
+        <form className="form-filter">
             <input
                 className="input-filter"
                 placeholder="Tìm kiếm todo..."
                 type="text"
-                // value={searchTerm}
-                onChange={handleSearchTermChange}
+                value={title || ''}
+                onChange={handleSearch}
             />
+            {isLoading && <div>Loading...</div>}
         </form>
-    )
+    );
 }
 
 TodoFilter.propTypes = {

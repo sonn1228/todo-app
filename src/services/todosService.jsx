@@ -9,6 +9,10 @@ export const fetchTodos = async () => {
     const res = await axios.get(`${BASE_URL}${endpoint.todos}`);
     return res.data;
 };
+export const fetchTodosFilter = async (title) => {
+    const res = await axios.get(`${BASE_URL}${endpoint.todos}?title=${title}`);
+    return res.data;
+};
 export const postTodo = async (todo) => {
     const response = await axios.post(`${BASE_URL}${endpoint.todos}`, {
         ...todo

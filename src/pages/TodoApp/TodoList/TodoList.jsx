@@ -12,12 +12,12 @@ export default function TodoList({
 }) {
     return (<><ul className="list-todo">
         {Array.isArray(data) && data.length > 0 ? (
-            data.map(({ title, completed, id }) => {
+            data.map(({ title, completed, id }, index) => {
                 return (
                     <TodoItem
                         globalLoading={loading}
                         setGlobalLoading={setGlobalLoading}
-                        key={id}
+                        key={index}
                         title={title}
                         completed={completed}
                         id={id}
