@@ -6,9 +6,9 @@ import TestRedux from "./components/TestRedux/TestRedux";
 
 function App() {
   return (<>
-    <TestRedux />
+    {/* <TestRedux /> */}
     {/* <TodoApp /> */}
-    {/* <AppRoutes /> */}
+    <AppRoutes />
     {/* <button onClick={() => {
       accessToast("Hello world")
     }}> click me</button> */}

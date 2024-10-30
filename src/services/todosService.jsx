@@ -7,6 +7,7 @@ export const endpoint = {
 // res.data -> res.json({ backend })
 export const fetchTodos = async () => {
     const res = await axios.get(`${BASE_URL}${endpoint.todos}`);
+    console.log("res: ", res)
     return res.data;
 };
 export const fetchTodosFilter = async (title) => {

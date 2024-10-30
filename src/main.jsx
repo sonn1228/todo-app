@@ -1,5 +1,4 @@
 // import lib
-import { QueryClient, QueryClientProvider } from 'react-query';
 import React from "react";
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
@@ -14,9 +13,7 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
+        <App />
       </React.StrictMode>
     </BrowserRouter>
   </Provider>
