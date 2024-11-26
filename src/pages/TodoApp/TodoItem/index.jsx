@@ -4,6 +4,7 @@ import TodoInput from './components/TodoInput';
 import TodoCheckbox from './components/TodoCheckbox';
 import TodoButtons from './components/TodoButton';
 import { deleteTodo, patchTodo } from '../../../services/todosService';
+import { accessToast } from '../../../helpers/toastify';
 
 export default function TodoItem({
     title,
@@ -27,7 +28,7 @@ export default function TodoItem({
             console.log("Running")
             await deleteTodo(id);
             setRefreshTodos(!refreshTodos);
-
+            accessToast("Delete thành công")
             setGlobalLoading(false);
         }
     }

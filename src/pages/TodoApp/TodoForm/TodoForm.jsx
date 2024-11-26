@@ -2,6 +2,7 @@ import './TodoForm.css';
 import propTypes from 'prop-types';
 import Button from '../../../components/Button/Button';
 import { postTodo } from '../../../services/todosService';
+import {accessToast} from '../../../helpers/toastify.jsx'
 export default function TodoForm({
     setTodosList,
     loading,
@@ -19,8 +20,10 @@ export default function TodoForm({
                 title: target.todo.value
             }
             await postTodo(newTodo);
+            accessToast("Them todo thành công")
             setRefreshTodos(!refreshTodos);
             setGlobalLoading(false);
+            target.todo.value =''
         }
         else {
             localStorage.removeItem('token');
